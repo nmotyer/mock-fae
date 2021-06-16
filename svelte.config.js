@@ -1,5 +1,6 @@
 import preprocess from 'svelte-preprocess';
-import adapterStatic from '@sveltejs/adapter-static';
+//import adapterStatic from '@sveltejs/adapter-static';
+import vercel from '@sveltejs/adapter-vercel';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
@@ -21,9 +22,7 @@ const config = {
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
-		adapter: {
-			adapt: adapterStatic
-		}
+		adapter: vercel()
 	}
 };
 

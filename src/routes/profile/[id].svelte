@@ -1,5 +1,5 @@
 <script context="module">  
-    export const prerender = true;
+    //export const prerender = true;
     export async function load({page}) {
         const id = page.params.id;
         const url = `https://api.prod.findanexpert.unimelb.edu.au/profile/${id}`;
@@ -34,7 +34,9 @@
     }
 
 </script>
-
+<svelte:head>
+    <title>{$profile.preferred_name}'s Profile</title>
+</svelte:head>
 <!-- travelling sticky navBar-->
 
 
