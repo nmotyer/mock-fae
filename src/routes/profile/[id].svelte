@@ -1,5 +1,5 @@
 <script context="module">  
-    export const prerender = true;
+    //export const prerender = false;
     export async function load({page}) {
         const id = page.params.id;
         const url = `https://api.prod.findanexpert.unimelb.edu.au/profile/${id}`;
