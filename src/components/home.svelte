@@ -1,5 +1,5 @@
 <script>
-    import { fade, slide, fly } from 'svelte/transition';
+    import { fade, fly } from 'svelte/transition';
     import Business from './home/business.svelte';
     import Supervision from './home/supervision.svelte';
     import banner from '../img/banner.webp';
@@ -20,6 +20,20 @@
         }
     }
 
+    let sQuery = '';
+    let results = '';
+
+    const customAutocomplete = async () => {
+        const list = await fetch(`https://api.prod.findanexpert.unimelb.edu.au/autocomplete/${sQuery}`);
+        const res = await list.json();
+        console.log(res);
+        results = res.suggestions;
+    }
+
+const keypressSearch = e => {
+    if (e.charCode === 13) customAutocomplete();
+  };
+
 </script>
 <home>
     <div class="w-full bg-gray-600 h-96 flex justify-items-start bg-cover bg-center" style="background-image: url({banner});">
@@ -27,10 +41,20 @@
             <div class="m-auto w-full text-white text-5xl">___<br/><br/>Find an Expert at the<br/>University of Melbourne</div><br/>
             <div class="m-auto w-full text-white text-xl">Search by area of expertise or name</div>
             <div class="m-auto w-full">
-                <input type="text" class="w-1/2 rounded-md h-10 text-lg text-gray-500" id="search" placeholder={search}>
+                <input type="text"
+                class="w-1/2 rounded-md h-10 text-lg text-gray-500"
+                id="search" placeholder={search}
+                bind:value={sQuery}
+                on:keypress={keypressSearch}
+                >
                 <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" viewBox="0 0 24 24" class="w-8 h-8"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </button>
+                {#each results as result}
+                    <div class="w-1/2 h-10 rounded-md flex justify-start bg-white">
+                        <p class="">{result.text}</p>
+                    </div>
+                {/each}
             </div>
         </div>
     </div>
